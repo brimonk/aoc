@@ -154,7 +154,7 @@ int main(int argc, char **argv)
 		tokens[i] = s;
 
 		addlinkage(tokens[0], tokens[2], atoi(tokens[4]));
-		addlinkage(tokens[2], tokens[0], atoi(tokens[4]));
+		// addlinkage(tokens[2], tokens[0], atoi(tokens[4]));
 	}
 
 	printf("cities len %d\n", listlen((void *)cities));
