@@ -5,138 +5,31 @@
 #include <limits.h>
 #include <assert.h>
 
-// time to do some dfs (or something)
+#define MAXCITIES (1 << 10)
 
-struct list_t {
-	struct list_t *next;
+char *CITIES[MAXCITIES] = {0};
+size_t CITIES_LEN = 0;
+int WEIGHTS[MAXCITIES][MAXCITIES] = {0};
+
+int DIST[MAXCITIES];
+int PREV[MAXCITIES];
+
+struct queue_t *QUEUE;
+
+struct queue_t {
+	struct queue_t *next;
+	int v;
 };
 
-struct city_t {
-	struct list_t list;
-	char *name;
-	int isvisited;
-	// struct city_t *neighbor;
-};
-
-struct linkage_t {
-	struct list_t list;
-	struct city_t *from;
-	struct city_t *to;
-	int cost;
-};
-
-struct city_t *cities = NULL;
-struct linkage_t *linkages = NULL;
-
-int linkagecmp(const void *a, const void *b)
+int getcity(char *s)
 {
-	struct linkage_t *la = (struct linkage_t *)a;
-	struct linkage_t *lb = (struct linkage_t *)b;
-	if (la != NULL && lb == NULL)
-		return -1;
-	if (la == NULL && lb == NULL)
-		return 0;
-	if (la == NULL && lb != NULL)
-		return 1;
-	return strcmp(la->from->name, lb->from->name);
-}
-
-struct list_t *prepend(struct list_t *head, struct list_t *elem)
-{
-	if (head == NULL) {
-		return elem;
-	} else {
-		elem->next = head;
-		return elem;
-	}
-}
-
-int listlen(struct list_t *curr)
-{
-	return curr == NULL ? 0 : 1 + listlen(curr->next);
-}
-
-void addcity(char *name)
-{
-	struct city_t *city = calloc(1, sizeof(*city));
-	city->name = strdup(name);
-	cities = (void *)prepend((struct list_t *)cities, (struct list_t *)city);
-}
-
-struct city_t *clookup(struct city_t *curr, char *name)
-{
-	if (curr == NULL)
-		return NULL;
-	if (strcmp(curr->name, name) == 0)
-		return curr;
-	return clookup((struct city_t *)curr->list.next, name);
-}
-
-void addlinkage(char *s1, char *s2, int cost)
-{
-	struct city_t *c1 = clookup(cities, s1);
-	if (c1 == NULL) {
-		addcity(s1);
-		c1 = clookup(cities, s1);
-	}
-	struct city_t *c2 = clookup(cities, s2);
-	if (c2 == NULL) {
-		addcity(s2);
-		c2 = clookup(cities, s2);
-	}
-	struct linkage_t *new = calloc(1, sizeof(*new));
-	new->from = c1;
-	new->to = c2;
-	new->cost = cost;
-	linkages = (void *)prepend((struct list_t *)linkages, (struct list_t *)new);
-}
-
-void lsort(struct list_t **head, int(*cmp)(const void *a, const void *b))
-{
-	struct list_t *t;
-	if (head == NULL || (*head) == NULL || (*head)->next == NULL)
-		return;
-	int cv = cmp((*head), (*head)->next);
-	if (0 < cv) {
-		t = *head;
-		*head = (*head)->next;
-		(*head)->next = t;
-	}
-	lsort(&((*head)->next), cmp);
-}
-
-// returns the nearest neighbor for the given city
-struct linkage_t *nearest_neighbor(struct city_t *city)
-{
-	struct linkage_t *curr;
-	struct linkage_t *nearest = NULL;
-	int dist = INT_MAX;
-	printf("finding nearest for %s\n", city->name);
-	for (curr = linkages; curr; curr = (void *)curr->list.next) {
-		if (curr->from == city)
-			break;
-		printf("L %s -> %s\n", curr->from->name, curr->to->name);
-	}
-	assert(curr != NULL);
-	for (; curr && curr->from == city; curr = (void *)curr->list.next) {
-		if (curr->cost < dist) {
-			dist = curr->cost;
-			nearest = curr;
-		}
-	}
-	assert(nearest != NULL);
-	assert(curr->from != city);
-	return nearest;
-}
-
-int has_unvisited(struct city_t *cities)
-{
-	if (cities == NULL)
-		return 0;
-	else if (cities->isvisited)
-		return has_unvisited((struct city_t *)cities->list.next);
-	else
-		return 1;
+	int i;
+	for (i = 0; i < CITIES_LEN; i++)
+		if (strcmp(CITIES[i], s) == 0)
+			return i;
+	assert(CITIES_LEN < MAXCITIES);
+	CITIES[CITIES_LEN++] = strdup(s);
+	return CITIES_LEN - 1;
 }
 
 int main(int argc, char **argv)
@@ -153,28 +46,34 @@ int main(int argc, char **argv)
 			tokens[i] = s;
 		tokens[i] = s;
 
-		addlinkage(tokens[0], tokens[2], atoi(tokens[4]));
-		// addlinkage(tokens[2], tokens[0], atoi(tokens[4]));
+		int c1 = getcity(tokens[0]);
+		int c2 = getcity(tokens[2]);
+		int cost = atoi(tokens[4]);
+
+		WEIGHTS[c1][c2] = cost;
+		WEIGHTS[c2][c1] = cost;
 	}
 
-	printf("cities len %d\n", listlen((void *)cities));
-	printf("linkages len %d\n", listlen((void *)linkages));
+	// NOTE (Brian) do Dijkstra's for each starting vertex (city) to find the min distance
 
-	lsort((struct list_t **)&linkages, linkagecmp);
+#if 0
 
-	struct city_t *curr = cities;
-	struct linkage_t *nearest_link = NULL;
-	int distance = 0;
-
-	while (has_unvisited(cities)) {
-		nearest_link = nearest_neighbor(curr);
-		printf("from %s to %s, cost %d\n", curr->name, nearest_link->to->name, nearest_link->cost);
-		distance += nearest_link->cost;
-		curr->isvisited = 1;
-		curr = nearest_link->to;
+	// init for dijkstra's
+	for (i = 0; i < CITIES_LEN; i++) {
+		DIST[i] = INT_MAX;
+		PREV[i] = -1;
+		enqueue(i);
 	}
 
-	printf("shortest distance %d\n", distance);
+	DIST[0] = 0;
+
+	while (QUEUE != NULL) {
+		struct queue_t *u = dequeue();
+	}
+#endif
+
+	for (i = 0; i < CITIES_LEN; i++)
+		free(CITIES[i]);
 
 	return 0;
 }
