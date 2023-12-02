@@ -1,13 +1,4 @@
-#include <stdio.h>
-#include <stdio.h>
-#include <string.h>
-#include <stdbool.h>
-#include <ctype.h>
-#include <time.h>
-#include <limits.h>
-#include <assert.h>
-
-#define MIN(x, y) ((x) < (y) ? (x) : (y))
+#include "common.h"
 
 void p1()
 {
