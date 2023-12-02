@@ -25,4 +25,8 @@ typedef double     f64;
 #define MIN(x, y) ((x) < (y) ? (x) : (y))
 #define MAX(x, y) ((x) > (y) ? (x) : (y))
 
+#define STB_DS_IMPLEMENTATION
+#define STBDS_NO_SHORT_NAMES
+#include "stb_ds.h"
+
 #endif // COMMON_H_
