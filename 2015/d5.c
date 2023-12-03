@@ -1,7 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <assert.h>
+#include "common.h"
 
 int isvowel(char c)
 {
@@ -43,7 +40,7 @@ int isnice(char *s)
 	return vowels >= 3 && hasdouble;
 }
 
-int main(int argc, char **argv)
+void p1()
 {
 	int nicestrs = 0;
 	char buf[512];
@@ -54,7 +51,60 @@ int main(int argc, char **argv)
 			nicestrs++;
 	}
 
-	printf("nice strings %d\n", nicestrs);
+	printf("p1: %d\n", nicestrs);
 
 	return 0;
+}
+
+int isnice2(char *s)
+{
+	int firstcase = 0;
+	int secondcase = 0;
+	int len = strlen(s);
+
+	// first case
+	for (int i = 0; i < len; i++) {
+		for (int j = i + 2; j < len; j++) {
+			if (s[i + 0] == s[j + 0] && s[i + 1] == s[j + 1]) {
+				firstcase = 1;
+				goto escape;
+			}
+		}
+	}
+
+	escape:
+
+	// second case
+	for (int i = 0; i < len - 1; i++) {
+		if (s[i] == s[i + 2]) {
+			secondcase = 1;
+			break;
+		}
+	}
+
+	return firstcase && secondcase;
+}
+
+void p2()
+{
+	int nicestrs = 0;
+	char buf[512];
+
+	while (buf == fgets(buf, sizeof buf, stdin)) {
+		buf[strlen(buf) - 1] = 0;
+		if (isnice2(buf))
+			nicestrs++;
+	}
+
+	printf("p2: %d\n", nicestrs);
+
+	return 0;
+}
+
+int main(int argc, char **argv)
+{
+    p1();
+    rewind(stdin);
+    p2();
+    return 0;
 }
