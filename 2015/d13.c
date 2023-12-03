@@ -74,6 +74,13 @@ void p1()
 	char *s;
 	int i;
 
+    memset(people, 0, sizeof people);
+    people_len = 0;
+    memset(happy_delta, 0, sizeof happy_delta);
+    memset(permutation, 0, sizeof permutation);
+    totals = NULL;
+    totals_len = 0;
+
 	totals = calloc(MAXTOTALS, sizeof(*totals));
 
 	while (buf == fgets(buf, sizeof buf, stdin)) {
@@ -115,6 +122,13 @@ void p2()
 	char *s;
 	int i;
 
+    memset(people, 0, sizeof people);
+    people_len = 0;
+    memset(happy_delta, 0, sizeof happy_delta);
+    memset(permutation, 0, sizeof permutation);
+    totals = NULL;
+    totals_len = 0;
+
 	totals = calloc(MAXTOTALS, sizeof(*totals));
 
 	while (buf == fgets(buf, sizeof buf, stdin)) {
@@ -132,7 +146,7 @@ void p2()
 	}
 
 #if 1
-	int lenstore = people_len;
+	u64 lenstore = people_len;
 	for (i = 0; i < lenstore; i++) {
 		addconnection("me", people[i], 0);
 		addconnection(people[i], "me", 0);
