@@ -1,10 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <ctype.h>
-#include <assert.h>
-
-#define PUZZLEINPUT "vzbxxyzz"
+#include "common.h"
 
 int chkpass(char *s)
 {
@@ -76,22 +70,42 @@ void nextpass(char *s)
 	rectify(s);
 }
 
-int main(int argc, char **argv)
+void p1()
 {
 	char buf[1024] = {0};
 	char *s;
 
-#ifdef PUZZLEINPUT
-	snprintf(buf, sizeof buf, PUZZLEINPUT);
-#else
 	fgets(buf, sizeof buf, stdin);
 	buf[strlen(buf) - 1] = 0;
-#endif
+
+	s = buf;
+
+	for (s = buf; !chkpass(s); nextpass(s))
+		;
+
+	printf("p1: %s\n", s);
+}
+
+void p2()
+{
+	char buf[1024] = {0};
+	char *s;
+
+	fgets(buf, sizeof buf, stdin);
+	buf[strlen(buf) - 1] = 0;
 
 	for (s = buf, nextpass(buf); !chkpass(s); nextpass(s))
 		;
+	for (s = buf, nextpass(buf); !chkpass(s); nextpass(s))
+		;
 
-	printf("pass '%s'\n", s);
+	printf("p2: %s\n", s);
+}
 
-	return 0;
+int main(int argc, char **argv)
+{
+    p1();
+    rewind(stdin);
+    p2();
+    return 0;
 }
