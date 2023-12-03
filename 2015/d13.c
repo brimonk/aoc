@@ -1,9 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <ctype.h>
-#include <limits.h>
-#include <assert.h>
+#include "common.h"
 
 #define MAXPEOPLE (1 << 10)
 #define MAXTOTALS (1 << 30)
@@ -13,7 +8,7 @@ size_t people_len = 0;
 int happy_delta[MAXPEOPLE][MAXPEOPLE];
 
 int permutation[MAXPEOPLE] = {0};
-short *totals = NULL;
+int *totals = NULL;
 int totals_len = 0;
 
 int getperson(char *name)
@@ -22,7 +17,7 @@ int getperson(char *name)
 	for (i = 0; i < people_len; i++)
 		if (strcmp(people[i], name) == 0)
 			return i;
-	people[people_len] = strdup(name);
+	people[i] = strdup(name);
 	return people_len++;
 }
 
@@ -72,14 +67,48 @@ void permute(int *a, int lo, int hi)
 	}
 }
 
-long permcnt(long p)
+void p1()
 {
-	if (p == 1)
-		return 1;
-	return p * permcnt(p - 1);
+	char buf[512];
+	char *tokens[32] = {0};
+	char *s;
+	int i;
+
+	totals = calloc(MAXTOTALS, sizeof(*totals));
+
+	while (buf == fgets(buf, sizeof buf, stdin)) {
+		buf[strlen(buf) - 1] = 0;
+
+		for (i = 0, s = strtok(buf, " "); s; i++, s = strtok(NULL, " "))
+			tokens[i] = s;
+		tokens[i] = s;
+
+		(*strchr(tokens[10], '.')) = 0;
+
+		int units = atoi(tokens[3]) * (strcmp(tokens[2], "lose") == 0 ? -1 : 1);
+
+		addconnection(tokens[0], tokens[10], units);
+	}
+
+	// build up all possible orders of people around the table (into a linked list)
+	for (i = 0; i < people_len; i++)
+		permutation[i] = i;
+
+	permute(permutation, 0, people_len - 1);
+
+	int max = INT_MIN;
+	for (i = 0; i < totals_len; i++)
+		if (max < totals[i])
+			max = totals[i];
+
+	printf("p1: %d\n", max);
+
+	for (i = 0; i < people_len; i++)
+		free(people[i]);
+	free(totals);
 }
 
-int main(int argc, char **argv)
+void p2()
 {
 	char buf[512];
 	char *tokens[32] = {0};
@@ -121,11 +150,17 @@ int main(int argc, char **argv)
 		if (max < totals[i])
 			max = totals[i];
 
-	printf("maximum happiness %d\n", max);
+	printf("p2: %d\n", max);
 
 	for (i = 0; i < people_len; i++)
 		free(people[i]);
 	free(totals);
+}
 
-	return 0;
+int main(int argc, char **argv)
+{
+    p1();
+    rewind(stdin);
+    p2();
+    return 0;
 }
