@@ -29,4 +29,13 @@ typedef double     f64;
 #define STBDS_NO_SHORT_NAMES
 #include "stb_ds.h"
 
+char *bfgets(char *s, size_t n, FILE *fp)
+{
+    char *t = fgets(s, n, fp);
+    if (t != NULL) {
+        s[strlen(s)] = 0;
+    }
+    return t;
+}
+
 #endif // COMMON_H_
