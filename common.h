@@ -26,7 +26,7 @@ typedef double     f64;
 #define MAX(x, y) ((x) > (y) ? (x) : (y))
 
 #define STB_DS_IMPLEMENTATION
-#define STBDS_NO_SHORT_NAMES
+// #define STBDS_NO_SHORT_NAMES
 #include "stb_ds.h"
 
 char *bfgets(char *s, size_t n, FILE *fp)
@@ -37,5 +37,7 @@ char *bfgets(char *s, size_t n, FILE *fp)
     }
     return t;
 }
+
+#define ARRSIZE(x) (sizeof((x))/sizeof((x)[0]))
 
 #endif // COMMON_H_
