@@ -22,6 +22,8 @@ i64 find_next_number(i64 *arr)
     } else {
         return arr[arrlen(arr) - 1] + find_next_number(diff);
     }
+
+    arrfree(diff);
 }
 
 void p1()
@@ -51,6 +53,8 @@ i64 find_prev_number(i64 *arr)
     } else {
         return arr[0] - find_prev_number(diff);
     }
+
+    arrfree(diff);
 }
 
 void p2()
