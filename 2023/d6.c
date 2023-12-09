@@ -37,7 +37,7 @@ void p1()
 
     ans = 1;
     for (i64 i = 0; i < arrlen(ways); i++) {
-        fprintf(stderr, "\t%ld\n", ways[i]);
+        // fprintf(stderr, "\t%ld\n", ways[i]);
         ans *= ways[i];
     }
 

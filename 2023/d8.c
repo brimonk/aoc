@@ -78,11 +78,15 @@ void p1()
 
     printf("p1: %ld\n", ans);
 
+    free(instructions);
+
     for (size_t i = 0; i < arrlen(map); i++) {
         free(map[i].key);
         free(map[i].value.left);
         free(map[i].value.right);
     }
+
+    arrfree(map);
 }
 
 i64 find_length_to_z(struct node *list, struct node *curr, char *instructions)
@@ -180,6 +184,18 @@ void p2()
     ans = find_lcm(steps);
 
     printf("p2: %ld\n", ans);
+
+    arrfree(steps);
+    arrfree(currlist);
+    free(instructions);
+
+    for (size_t i = 0; i < arrlen(map); i++) {
+        free(map[i].key);
+        free(map[i].value.left);
+        free(map[i].value.right);
+    }
+
+    arrfree(map);
 }
 
 int main(int argc, char **argv)

@@ -17,13 +17,17 @@ i64 find_next_number(i64 *arr)
         arrput(diff, arr[i] - arr[i - 1]);
     }
 
+    i64 ans;
+
     if (all_zeroes(diff)) {
-        return arr[0];
+        ans = arr[0];
     } else {
-        return arr[arrlen(arr) - 1] + find_next_number(diff);
+        ans = arr[arrlen(arr) - 1] + find_next_number(diff);
     }
 
     arrfree(diff);
+
+    return ans;
 }
 
 void p1()
@@ -48,13 +52,17 @@ i64 find_prev_number(i64 *arr)
         arrput(diff, arr[i] - arr[i - 1]);
     }
 
+    i64 ans;
+
     if (all_zeroes(diff)) {
-        return arr[0];
+        ans = arr[0];
     } else {
-        return arr[0] - find_prev_number(diff);
+        ans = arr[0] - find_prev_number(diff);
     }
 
     arrfree(diff);
+
+    return ans;
 }
 
 void p2()
