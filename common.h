@@ -40,6 +40,8 @@ char *bfgets(char *s, size_t n, FILE *fp)
 #define ARRSIZE(x) (sizeof((x))/sizeof((x)[0]))
 #define SWAP(a, b) do { typeof((a)) z_ = (b); (b) = (a); (a) = z_; } while (0);
 
+#define streq(a, b) (strcmp((a), (b)) == 0 && strlen((a)) == strlen((b)))
+
 char *ltrim(char *s)
 {
     while (isspace(*s))
