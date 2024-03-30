@@ -9,6 +9,7 @@
 #include <ctype.h>
 #include <time.h>
 #include <limits.h>
+#include <math.h>
 #include <assert.h>
 
 typedef int8_t     i8;
