@@ -2,16 +2,16 @@
 
 void p1()
 {
-    int ans;
+    i64 ans = 0;
 
-    printf("p1: %d\n", ans);
+    printf("p1: %ld\n", ans);
 }
 
 void p2()
 {
-    int ans;
+    i64 ans = 0;
 
-    printf("p2: %d\n", ans);
+    printf("p2: %ld\n", ans);
 }
 
 int main(int argc, char **argv)
