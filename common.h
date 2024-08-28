@@ -23,6 +23,8 @@ typedef uint64_t   u64;
 typedef float      f32;
 typedef double     f64;
 
+#define BUFLARGE 4096
+
 #define MIN(x, y) ((x) < (y) ? (x) : (y))
 #define MAX(x, y) ((x) > (y) ? (x) : (y))
 
@@ -143,6 +145,13 @@ char **read_all_lines()
 	}
 
 	return lines;
+}
+
+void free_all_lines(char **lines)
+{
+	for (size_t i = 0; i < arrlen(lines); i++)
+		free(lines[i]);
+	arrfree(lines);
 }
 
 // COMPARATORS
