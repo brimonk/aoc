@@ -132,4 +132,28 @@ char **find_all_strs(char *s)
     return find_all_strs_sep(s, " ");
 }
 
+char **read_all_lines()
+{
+	char **lines = NULL;
+	char tbuf[BUFLARGE] = {0};
+
+	while (fgets(tbuf, sizeof tbuf, stdin)) {
+		tbuf[strlen(tbuf) - 1] = 0;
+		arrput(lines, strdup(tbuf));
+	}
+
+	return lines;
+}
+
+// COMPARATORS
+
+int comp_i32(const void *a, const void *b)
+{
+	i32 ia = *(i32 *)a;
+	i32 ib = *(i32 *)b;
+	if (ia > ib) return -1;
+	if (ia < ib) return 1;
+	return 0;
+}
+
 #endif // COMMON_H_
