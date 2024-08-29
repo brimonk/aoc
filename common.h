@@ -154,6 +154,14 @@ void free_all_lines(char **lines)
 	arrfree(lines);
 }
 
+// TODO is there a less awful way to do this?
+
+#define autofreelines __attribute__((cleanup(free_all_lines_cleanup)))
+void free_all_lines_cleanup(char ***lines)
+{
+	free_all_lines(*lines);
+}
+
 // COMPARATORS
 
 int comp_i32(const void *a, const void *b)
