@@ -137,7 +137,7 @@ void p1()
 			int do_split = false;
 
 			char square = lines[curr->y][curr->x];
-			printf("found %c\n", square);
+			// printf("found %c\n", square);
 
 			energy[curr->y * grid_w + curr->x].dir[curr->dir] = true;
 
@@ -205,7 +205,7 @@ void p1()
 	i64 energized = 0;
 
 	for (size_t i = 0; i < grid_h * grid_w; i++) {
-		char *newline = i > 0 && (i + 1) % grid_w == 0 ? "\n" : "";
+		// char *newline = i > 0 && (i + 1) % grid_w == 0 ? "\n" : "";
 		char chr = IsEnergized(energy[i]) ? '#' : '.';
 
 		if (IsEnergized(energy[i])) {
@@ -245,7 +245,9 @@ void p1()
 		}
 #endif
 
-		printf("%c%s", chr, newline);
+		chr++;
+
+		// printf("%c%s", chr, newline);
 	}
 
 	ans = energized;
