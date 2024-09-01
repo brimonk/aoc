@@ -162,6 +162,12 @@ void free_all_lines_cleanup(char ***lines)
 	free_all_lines(*lines);
 }
 
+#define autofree __attribute__((cleanup(autofree_cleanup)))
+void autofree_cleanup(void *p)
+{
+	free(*(void **)p);
+}
+
 // COMPARATORS
 
 int comp_i32(const void *a, const void *b)
