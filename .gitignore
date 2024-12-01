@@ -3,4 +3,6 @@
 !*/
 !Makefile
 *.txt
+*.ex
+*.in
 .gdb_history

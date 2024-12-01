@@ -1,4 +1,4 @@
-CFLAGS=-Wall -g3 -I../
+CFLAGS=-Wall -Wuninitialized -g3 -I../
 SRCS=$(wildcard *.c)
 BINS=$(SRCS:%.c=%)
 

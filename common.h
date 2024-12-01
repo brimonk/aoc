@@ -168,11 +168,25 @@ void cleanup_free(void *p)
 	free(*(void **)p);
 }
 
-#define autoarrfree __attribute__((cleanup(autoarrfree_fn)))
-void autoarrfree_fn(void *p)
+#define autofreearr __attribute__((cleanup(autofreearr_fn)))
+void autofreearr_fn(void *p)
 {
 	arrfree(*(void **)p);
 }
+
+// TODO (Brian) determine if there's a way that we can make an autofreemap cleanup macro. Currently,
+// the stb_ds library uses a macro from the calling type to determine the "true pointer" to actually
+// free.
+//
+// Since we only get a void * that's really a void ** in this cleanup function, we can't use this
+// free'ing macro, as the builtin requires a size.
+#if 0
+#define autofreemap __attribute__((cleanup(autofreemap_fn)))
+void autofreemap_fn(void *p)
+{
+	hmfree((*(void **)p));
+}
+#endif
 
 // get_grid_size: returns the width and height of the passed in grid
 void get_grid_size(char **grid, size_t *w, size_t *h)
