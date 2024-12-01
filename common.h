@@ -162,6 +162,26 @@ void free_all_lines_cleanup(char ***lines)
 	free_all_lines(*lines);
 }
 
+#define autofree __attribute__((cleanup(cleanup_free)))
+void cleanup_free(void *p)
+{
+	free(*(void **)p);
+}
+
+#define autoarrfree __attribute__((cleanup(autoarrfree_fn)))
+void autoarrfree_fn(void *p)
+{
+	arrfree(*(void **)p);
+}
+
+// get_grid_size: returns the width and height of the passed in grid
+void get_grid_size(char **grid, size_t *w, size_t *h)
+{
+	assert(grid != NULL);
+	*h = arrlen(grid);
+	*w = strlen(grid[0]);
+}
+
 // COMPARATORS
 
 int comp_i32(const void *a, const void *b)
