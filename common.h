@@ -147,6 +147,14 @@ char **read_all_lines()
 	return lines;
 }
 
+char **copy_lines(char **lines)
+{
+	char **copy = NULL;
+	for (i32 i = 0; i < arrlen(lines); i++)
+		arrput(copy, strdup(lines[i]));
+	return copy;
+}
+
 void free_all_lines(char **lines)
 {
 	for (size_t i = 0; i < arrlen(lines); i++)
