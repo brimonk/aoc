@@ -26,6 +26,7 @@ void p1()
 		autofreearr i64 *nums = find_all_i64s(lines[i]);
 
 		int is_possible = is_calibration_possible(nums, nums[0], 0, 0);
+		// printf("%s %s\n", lines[i], is_possible ? "POSSIBLE" : "NOT POSSIBLE");
 		if (is_possible) {
 			ans += nums[0];
 		}
@@ -70,7 +71,7 @@ void p2()
 		autofreearr i64 *nums = find_all_i64s(lines[i]);
 
 		int is_possible = is_calibration_possible2(nums, nums[0], 0, 0);
-		printf("%s %s\n", lines[i], is_possible ? "POSSIBLE" : "NOT POSSIBLE");
+		// printf("%s %s\n", lines[i], is_possible ? "POSSIBLE" : "NOT POSSIBLE");
 		if (is_possible) {
 			ans += nums[0];
 		}
