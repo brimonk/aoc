@@ -23,7 +23,7 @@ typedef uint64_t   u64;
 typedef float      f32;
 typedef double     f64;
 
-#define BUFLARGE 4096
+#define BUFLARGE 1 << 18
 
 #define MIN(x, y) ((x) < (y) ? (x) : (y))
 #define MAX(x, y) ((x) > (y) ? (x) : (y))
