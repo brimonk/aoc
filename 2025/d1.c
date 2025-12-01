@@ -43,13 +43,10 @@ i32 rotate(i32 *dial, i32 clicks, i32 dir)
         *dial %= 100;
 
         if (*dial == 0) {
-            printf("  one zero\n");
             zeroes++;
         }
 
     }
-
-    printf("  dial %d\n", *dial);
 
     return zeroes;
 }
@@ -62,7 +59,6 @@ void p2()
     i32 dial = 50;
 
 	for (i32 i = 0; i < arrlen(lines); i++) {
-        printf("%s\n", lines[i]);
         i32 clicks = atoi(lines[i] + 1);
         i32 direction = lines[i][0] == 'L' ? -1 : 1;
         ans += rotate(&dial, clicks, direction);
