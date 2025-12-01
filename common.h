@@ -71,7 +71,7 @@ i32 *find_all_i32s(char *s)
     size_t len = 0, tlen = 0;
     i32 *arr = NULL;
 
-    while (sscanf(s + len, " %d%ln", &v, &tlen) == 1) {
+    while (sscanf(s + len, " %d%*[, ]%ln", &v, &tlen) == 1) {
         arrput(arr, v);
         len += tlen;
     }
@@ -85,7 +85,7 @@ i64 *find_all_i64s(char *s)
     size_t len = 0, tlen = 0;
     i64 *arr = NULL;
 
-    while (sscanf(s + len, " %ld%ln", &v, &tlen) == 1) {
+    while (sscanf(s + len, " %ld%*[, ]%ln", &v, &tlen) == 1) {
         arrput(arr, v);
         len += tlen;
     }
@@ -99,7 +99,7 @@ f32 *find_all_f32s(char *s)
     size_t len = 0, tlen = 0;
     f32 *arr = NULL;
 
-    while (sscanf(s + len, " %f%ln", &v, &tlen) == 1) {
+    while (sscanf(s + len, " %f%*[, ]%ln", &v, &tlen) == 1) {
         arrput(arr, v);
         len += tlen;
     }
@@ -113,7 +113,7 @@ f64 *find_all_f64s(char *s)
     size_t len = 0, tlen = 0;
     f64 *arr = NULL;
 
-    while (sscanf(s + len, " %lf%ln", &v, &tlen) == 1) {
+    while (sscanf(s + len, " %lf%*[, ]%ln", &v, &tlen) == 1) {
         arrput(arr, v);
         len += tlen;
     }
