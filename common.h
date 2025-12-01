@@ -1,5 +1,5 @@
-#ifndef COMMON_H_
-#define COMMON_H_
+#ifndef COMMON_H
+#define COMMON_H
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -44,6 +44,7 @@ char *bfgets(char *s, size_t n, FILE *fp)
 #define SWAP(a, b) do { typeof((a)) z_ = (b); (b) = (a); (a) = z_; } while (0);
 
 #define streq(a, b) (strcmp((a), (b)) == 0 && strlen((a)) == strlen((b)))
+#define strneq(a, b) (strncmp((a), (b), strlen((b))) == 0)
 
 char *ltrim(char *s)
 {
@@ -215,4 +216,4 @@ int comp_i32(const void *a, const void *b)
 	return 0;
 }
 
-#endif // COMMON_H_
+#endif // COMMON_H
