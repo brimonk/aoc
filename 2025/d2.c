@@ -42,8 +42,6 @@ int is_p2_invalid(i64 value)
     int len = strlen(buf);
     int halflen = strlen(buf) / 2;
 
-    i64 occurrences = 0;
-
     char *s = buf;
     for (i32 i = 1; i <= halflen; i++) {
         if (len % i != 0)
@@ -63,7 +61,6 @@ int is_p2_invalid(i64 value)
         }
     }
 
-    // return occurrences >= 2;
     return false;
 }
 
@@ -79,7 +76,6 @@ void p2()
 
         for (i64 j = a; j <= b; j++) {
             if (is_p2_invalid(j)) {
-                printf("%ld is invalid\n", j);
                 ans += j;
             }
         }
